@@ -304,6 +304,19 @@
     .how-card p { font-size: 0.9rem; line-height: 1.6; color: #8888a0; }
     .deals { padding: 120px 0; background: rgba(255, 255, 255, 0.015); position: relative; }
     .deals-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+    /* ===== BARRA DE FILTROS E ORDENAÇÃO (Fase 2) ===== */
+    .deals-controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; margin-bottom: 32px; padding: 16px 18px; background: #14141c; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; }
+    .dc-field { display: flex; flex-direction: column; gap: 6px; }
+    .dc-field label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: #8888a0; font-weight: 600; }
+    .dc-field select { appearance: none; -webkit-appearance: none; background-color: #0f0f16; color: #e8e8ed; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 9px 32px 9px 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; cursor: pointer; min-width: 150px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238888a0' d='M6 8L2 4h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+    .dc-field select:focus { outline: none; border-color: #fab005; }
+    .dc-contador { margin-left: auto; align-self: center; color: #fab005; font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
+    @media (max-width: 640px) {
+      .deals-controls { gap: 10px 12px; }
+      .dc-field { flex: 1 1 140px; }
+      .dc-field select { min-width: 0; width: 100%; }
+      .dc-contador { margin-left: 0; width: 100%; text-align: right; }
+    }
     .deals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .deal-card {
       background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 20px; overflow: hidden;
@@ -768,7 +781,48 @@
           <div class="section-label reveal">Ofertas em destaque</div>
           <h2 class="section-title reveal reveal-delay-1">Últimos <span class="highlight">achados</span></h2>
         </div>
-        <button class="btn-secondary reveal reveal-delay-2" style="flex-shrink:0;">Ver todas →</button>
+        <button class="btn-secondary reveal reveal-delay-2" style="flex-shrink:0;" id="limparFiltros">Limpar filtros</button>
+      </div>
+      <div class="deals-controls reveal" id="dealsControls">
+        <div class="dc-field">
+          <label for="ordenarPor">Ordenar por</label>
+          <select id="ordenarPor">
+            <option value="relevancia">Relevância</option>
+            <option value="desconto">Maior desconto FIPE</option>
+            <option value="preco-asc">Menor preço</option>
+            <option value="preco-desc">Maior preço</option>
+            <option value="ano-desc">Mais novo</option>
+            <option value="km-asc">Menor km</option>
+          </select>
+        </div>
+        <div class="dc-field">
+          <label for="filtroMarca">Marca</label>
+          <select id="filtroMarca"><option value="">Todas</option></select>
+        </div>
+        <div class="dc-field">
+          <label for="filtroPreco">Preço</label>
+          <select id="filtroPreco">
+            <option value="">Qualquer</option>
+            <option value="0-50000">Até R$ 50 mil</option>
+            <option value="50000-100000">R$ 50–100 mil</option>
+            <option value="100000-200000">R$ 100–200 mil</option>
+            <option value="200000-">Acima de R$ 200 mil</option>
+          </select>
+        </div>
+        <div class="dc-field">
+          <label for="filtroDesconto">Desconto FIPE</label>
+          <select id="filtroDesconto">
+            <option value="">Qualquer</option>
+            <option value="abaixo">Abaixo da FIPE</option>
+            <option value="8">≥ 8% abaixo</option>
+            <option value="15">≥ 15% abaixo</option>
+          </select>
+        </div>
+        <div class="dc-field">
+          <label for="filtroCambio">Câmbio</label>
+          <select id="filtroCambio"><option value="">Qualquer</option></select>
+        </div>
+        <span class="dc-contador" id="contadorResultados"></span>
       </div>
       <div class="deals-grid" id="dealsGrid"></div>
     </div>
@@ -1017,8 +1071,12 @@
       try {
         const res = await fetch('carros.json');
         const carros = await res.json();
+        todosCarros = carros;
         renderizarMarquee(carros);
+        popularFiltros(carros);
+        inicializarControlesDeals();
         renderizarDeals(carros);
+        atualizarContador(carros.length, carros.length);
         montarHeroVisual(carros);
       } catch (err) {
         console.error('Não foi possível carregar carros.json:', err);
@@ -1423,7 +1481,7 @@
     function renderizarDeals(carros) {
       const grid = document.getElementById('dealsGrid');
       if (!carros.length) {
-        grid.innerHTML = '<p style="color:#8888a0;">Nenhuma oferta cadastrada no momento.</p>';
+        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px 24px; color:#8888a0;">Nenhum carro encontrado com esses filtros.</p>';
         return;
       }
       grid.innerHTML = carros.map((c, index) => {
@@ -1465,6 +1523,91 @@
       inicializarZoomLightbox();
     }
 
+    // ===== FILTROS E ORDENAÇÃO (Fase 2) =====
+    let todosCarros = [];
+    const IDS_CONTROLE = ['ordenarPor', 'filtroMarca', 'filtroPreco', 'filtroDesconto', 'filtroCambio'];
+
+    // % abaixo da Fipe (positivo = achado). Usa a mesma leitura de valor do selo.
+    function descontoPct(c) {
+      const fipe = parseValorBR(c.fipePreco), preco = parseValorBR(c.preco);
+      if (!fipe || !preco) return null;
+      return (fipe - preco) / fipe * 100;
+    }
+    function anoDe(c) {
+      const m = String(c.ano || '').match(/\d{4}/g);
+      return m ? Math.max(...m.map(Number)) : 0;
+    }
+
+    function popularFiltros(carros) {
+      const selMarca = document.getElementById('filtroMarca');
+      const selCambio = document.getElementById('filtroCambio');
+      if (selMarca) {
+        const marcas = [...new Set(carros.map(c => c.marca).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt'));
+        selMarca.insertAdjacentHTML('beforeend', marcas.map(m => `<option value="${m}">${m}</option>`).join(''));
+      }
+      if (selCambio) {
+        const cambios = [...new Set(carros.map(c => c.cambio).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt'));
+        selCambio.insertAdjacentHTML('beforeend', cambios.map(m => `<option value="${m}">${m}</option>`).join(''));
+      }
+    }
+
+    function atualizarContador(mostrando, total) {
+      const el = document.getElementById('contadorResultados');
+      if (!el) return;
+      el.textContent = mostrando === total ? `${total} achados` : `${mostrando} de ${total} achados`;
+    }
+
+    function aplicarFiltrosOrdenacao() {
+      const val = id => (document.getElementById(id) || {}).value || '';
+      const marca = val('filtroMarca'), faixaPreco = val('filtroPreco'), desc = val('filtroDesconto'),
+            cambio = val('filtroCambio'), ordem = val('ordenarPor');
+
+      let lista = todosCarros.filter(c => {
+        if (marca && c.marca !== marca) return false;
+        if (cambio && c.cambio !== cambio) return false;
+        if (faixaPreco) {
+          const [min, max] = faixaPreco.split('-').map(n => n === '' ? null : Number(n));
+          const p = parseValorBR(c.preco) || 0;
+          if (min != null && p < min) return false;
+          if (max != null && p >= max) return false;
+        }
+        if (desc) {
+          const d = descontoPct(c);
+          if (d == null) return false;
+          if (desc === 'abaixo' && d <= 0) return false;
+          if (desc !== 'abaixo' && d < Number(desc)) return false;
+        }
+        return true;
+      });
+
+      const comparadores = {
+        'desconto': (a, b) => (descontoPct(b) ?? -Infinity) - (descontoPct(a) ?? -Infinity),
+        'preco-asc': (a, b) => (parseValorBR(a.preco) || 0) - (parseValorBR(b.preco) || 0),
+        'preco-desc': (a, b) => (parseValorBR(b.preco) || 0) - (parseValorBR(a.preco) || 0),
+        'ano-desc': (a, b) => anoDe(b) - anoDe(a),
+        'km-asc': (a, b) => (parseValorBR(a.km) || 0) - (parseValorBR(b.km) || 0),
+      };
+      if (comparadores[ordem]) lista = [...lista].sort(comparadores[ordem]);
+
+      renderizarDeals(lista);
+      atualizarContador(lista.length, todosCarros.length);
+    }
+
+    function inicializarControlesDeals() {
+      IDS_CONTROLE.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', aplicarFiltrosOrdenacao);
+      });
+      const limpar = document.getElementById('limparFiltros');
+      if (limpar) limpar.addEventListener('click', () => {
+        IDS_CONTROLE.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = id === 'ordenarPor' ? 'relevancia' : '';
+        });
+        aplicarFiltrosOrdenacao();
+      });
+    }
+
     // ===== COMPARATIVO COM A TABELA FIPE =====
     // Cada carro pode ter: c.fipeValor (valor já digitado manualmente, ex: "45.200")
     // OU c.fipe = { codigo: "005340-6", anoCombustivel: "2018-1", tipo: "carro"|"moto" } pra buscar ao vivo
@@ -1483,6 +1626,12 @@
     }
 
     async function buscarValorFipe(c) {
+      // Valor da Fipe já apurado e guardado no carros.json (ex: "R$ 320.647,00").
+      // É a fonte principal hoje; fipeValor/fipe.codigo ficam como alternativas.
+      if (c.fipePreco) {
+        const fonte = c.fipeConfianca ? `Tabela Fipe (confiança ${c.fipeConfianca})` : 'Tabela Fipe';
+        return { valor: parseValorBR(c.fipePreco), fonte };
+      }
       if (c.fipeValor) {
         return { valor: parseValorBR(c.fipeValor), fonte: 'Tabela Fipe' };
       }

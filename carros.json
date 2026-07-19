@@ -2,7 +2,7 @@
   {
     "id": 5,
     "titulo": "VOYAGE Comfortline 1.0 Flex",
-    "marca": "Volskvagen",
+    "marca": "Volkswagen",
     "preco": "44.990",
     "ano": "2014/2015",
     "km": "97.919 km",
@@ -61,7 +61,7 @@
   {
     "id": 7,
     "titulo": "ARRIZO 1.5 Turbo RX",
-    "marca": "arrizo",
+    "marca": "Chery",
     "preco": "65.990",
     "ano": "2019/2020",
     "km": "101.441 KM",
@@ -1268,7 +1268,7 @@
   {
     "id": 64,
     "titulo": "Mercedes-benz C 300 2.0 16V",
-    "marca": "Mercedes-benz",
+    "marca": "Mercedes-Benz",
     "preco": "329.990",
     "ano": "2023/2023",
     "km": "28.189 km",
