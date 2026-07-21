@@ -56,7 +56,98 @@ Isso elogia 96% do estoque e sinaliza 4. É consultoria, não crítica.
 Os dois com km alto (Prisma 136 mil, L200 157 mil) são os mais defensáveis como
 alerta: quilometragem alta com ágio alto é a combinação clássica de encalhe.
 
-## 3. A mensagem (WhatsApp)
+## 2.5 A estrutura em duas etapas (porteiro → decisor)
+
+Na RH Motors o caminho passa por um **amigo vendedor**, que precisa abrir a porta
+do dono. São **duas conversas diferentes**, e usar o mesmo discurso nas duas é o
+jeito mais rápido de perder as duas.
+
+### Por que os interesses não são os mesmos
+
+| | O dono quer | O vendedor quer |
+|---|---|---|
+| Dor | capital parado, giro do estoque, margem | comissão, e cliente que chega já decidido |
+| Mede sucesso por | carro que sai do pátio | venda que **ele** fechou |
+| Medo | gastar com coisa que não dá retorno | trabalho a mais, e passar vergonha com o chefe |
+
+**Consequência prática:** a análise dos 4 outliers de preço **não pode aparecer
+na conversa com o vendedor**. Preço não é decisão dele, e levar isso pra ele
+soa como "vim dizer que vocês precificam errado" — dito pela boca do amigo que
+o apresentou. Ele vira porteiro fechado, não campeão.
+
+Essa análise é munição da **Etapa 2**, com o dono.
+
+### Etapa 1 — a conversa com o amigo (objetivo: acesso + informação)
+
+**Não é pitch.** São dois objetivos, nessa ordem:
+
+**a) Informação que você não tem e ele tem de graça:**
+- Quem decide de fato? O dono assina sozinho ou tem sócio/gerente?
+- Como chega cliente hoje? (OLX, Instagram, indicação, passagem na rua)
+- Já tentaram vender alguma coisa parecida pra ele? Deu o quê?
+- O que o dono anda reclamando ultimamente?
+- Qual carro está encalhado há mais tempo? — **essa é a melhor pergunta.** Se a
+  resposta bater com algum dos 4 outliers, sua Etapa 2 fica imbatível: você
+  previu, pelo dado, o que ele já sente na pele.
+
+**b) O que o vendedor ganha** — tem que ser dito, não subentendido:
+
+> "O site manda gente que já pesquisou FIPE e já sabe qual carro quer. É
+> comprador mais adiantado que o da OLX. E eu consigo mandar o contato direto
+> pra você, não pro balcão geral."
+
+Lead qualificado indo direto pra ele é comissão. Isso é motivo real pra ele
+querer que dê certo — e não custa nada pra você prometer, porque é verdade.
+
+**c) O pedido, pequeno e fácil de recusar:**
+
+> "Você me apresenta? Não precisa vender nada pra ele, só falar que sou de
+> confiança e que vale 15 minutos. O resto eu faço."
+
+Pedir apresentação é barato. Pedir que ele venda por você é caro e ele não
+sabe fazer — vai fazer mal e a culpa parece sua.
+
+### O custo de misturar amizade com negócio (não pular)
+
+Você vai gastar capital social de um amigo. Isso é real e tem duas regras:
+
+1. **Deixa fácil ele dizer não.** Frase literal: *"se for te dar dor de cabeça
+   com o teu chefe, me fala que eu procuro outro caminho, sem problema nenhum."*
+   Amigo que se sente encurralado ajuda mal e depois some.
+2. **Se a venda acontecer, ele soube antes.** Nada pior que o vendedor descobrir
+   pelo chefe que o amigo dele fechou algo. Combina de avisar ele primeiro.
+
+### Etapa 2 — a conversa com o dono
+
+Aí sim entra tudo que está nos itens 2, 4 e 5 deste documento: os outliers, o
+relatório de graça, os R$ 300.
+
+Abre reconhecendo o vendedor: *"o [nome] falou que valia a pena te mostrar"* —
+transfere um pouco da confiança dele pra você e paga o favor publicamente.
+
+## 2.6 O molde pras próximas lojas
+
+Isso se repete. Duas situações:
+
+**Com alguém dentro** (como a RH Motors): usa as duas etapas acima. O contato
+interno serve pra **informação e acesso**, nunca pra vender.
+
+**Sem ninguém dentro** (loja fria): inverte — o relatório de graça vira a porta,
+porque você não tem quem te apresente. Manda o dado antes de pedir a reunião. É
+mais lento e converte menos, por isso a RH Motors vem primeiro: é onde a chance
+é maior, e o primeiro "sim" é o que você precisa pra ter caso pro segundo.
+
+**Regra que vale sempre:** descobrir quem decide **antes** de fazer o pitch.
+Vender pra quem não pode dizer sim é a forma mais comum de perder tempo em B2B.
+
+## 3. A mensagem pro DONO (Etapa 2, ou loja fria)
+
+> ⚠️ **Não mandar essa pro amigo vendedor.** Ela fala de precificação, que não é
+> decisão dele. Pro vendedor, usar o roteiro da Etapa 1 (item 2.5).
+>
+> Na RH Motors, o ideal é nem usar por escrito: se o amigo apresentar, isso vira
+> conversa presencial. O texto abaixo serve como roteiro do que dizer, e como
+> mensagem pronta pras lojas onde você não tem ninguém dentro.
 
 > Boa tarde! Aqui é o Raffer, eu toco o AchadoZ — site de ofertas de carro aqui
 > de Cuiabá que cruza os anúncios com a tabela FIPE.
