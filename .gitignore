@@ -1,0 +1,10 @@
+# Documento interno não vai pra repositório público.
+# Em 23/07/2026 o PRIMEIRA-ABORDAGEM.md (roteiro de venda pra RH Motors, com a
+# mediana de ágio deles e a análise do estoque deles) estava público aqui.
+# Este repo é espelho público do site — só o que é do site entra.
+# Documentação interna mora na holding: ../achadosauto-site-importado/
+PRIMEIRA-ABORDAGEM.md
+PLANO.md
+CLAUDE.md
+diagnostico.txt
+.claude/

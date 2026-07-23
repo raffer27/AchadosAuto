@@ -23,4 +23,4 @@ No ar. `index.html` e `carros.json`, com repositório próprio em github.com/raf
 ⚠️ **Atenção:** existe também a pasta `AchadoZauto/` neste mesmo diretório, do mesmo negócio. Ver a seção de pendências do relatório de auditoria.
 
 ---
-_SOBRE.md criado em 2026-07-20 na auditoria retroativa da RF Holding._
+_SOBRE.md criado em 2026-07-20 na auditoria retroativa da RF Group._
